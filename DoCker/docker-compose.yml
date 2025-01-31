@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  cardiovision:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "20201:20201"
+    volumes:
+      - ./TAVIVision:/app
+    tty: true
+    stdin_open: true
+    restart: unless-stopped  # Ensures the container restarts if it crashes
+    environment:
+      - NODE_ENV=production  # Example environment variable
+      - PYTHONUNBUFFERED=1  # Ensures logs appear in real-time
+      - CONDA_ENV=neeraj  # If you are using Conda, define the environment name
+    command: ["conda", "run", "-n", "neeraj", "python", "endpoint.py"]  # Ensures the correct Conda environment is used
