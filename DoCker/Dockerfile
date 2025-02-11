@@ -5,8 +5,8 @@ FROM continuumio/miniconda3
 WORKDIR /cardiovision/phase1
 
 # Copy requirement files explicitly from the correct location
-COPY cardiovision/phase1/conda-requirements.txt .
-COPY cardiovision/phase1/pip-requirements.txt .
+COPY conda-requirements.txt .
+COPY pip-requirements.txt .
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -26,7 +26,7 @@ RUN conda run -n neeraj pip install --no-cache-dir -r pip-requirements.txt
 
 
 # Copy application files
-COPY cardiovision/phase1/ .
+COPY . .
 
 # Ensure Conda environment is activated by default
 SHELL ["conda", "run", "-n", "neeraj", "/bin/bash", "-c"]

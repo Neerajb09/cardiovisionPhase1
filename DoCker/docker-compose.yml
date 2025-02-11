@@ -3,8 +3,8 @@ version: '3.8'
 services:
   cardiovision:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ../  # Use parent directory as the build context
+      dockerfile: DoCker/Dockerfile
     ports:
       - "20201:20201"
     volumes:
