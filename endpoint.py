@@ -97,9 +97,9 @@ def fetch_report():
 
     # Convert DataFrame to a list of dictionaries
     # results_json = results_table.to_dict(orient='records')
-    # print("1")
+    print("1")
     # 
-    # print(results_table)  # Debug: Print the results JSON
+    print(results_table)  # Debug: Print the results JSON
     return jsonify({"results": results_table})
 
 if __name__ == '__main__':

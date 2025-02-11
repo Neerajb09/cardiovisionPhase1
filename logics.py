@@ -130,7 +130,16 @@ class ConditionEvaluator:
             return ["Favourable", ((ICD - threshold) / threshold) * 100, None, str(round(threshold,2))+' mm']
         else:
             return ["Attention Required", None, ((threshold - ICD) / threshold) * 100, str(round(threshold,2))+' mm']
-
+    
+    def evaluate_Asc_Aorta(self):
+        if self.Asc_Aorta is None:
+            return ["Not Eligible", None, None, None]
+        threshold = 40
+        if self.Asc_Aorta < threshold:
+            return ["Favourable", None, None, "40 mm"]
+        else:
+            return ["Attention Required", None, ((self.Asc_Aorta - threshold) / threshold) * 100, "40 mm"]
+        
     def evaluate_all(self):
         return {
             "stjDiameter": self.evaluate_STJ(),
@@ -143,6 +152,7 @@ class ConditionEvaluator:
             "rcaHeight": self.evaluate_RCA(),
             "lcaHeight": self.evaluate_LCA(),
             "lvotDiameter": self.evaluate_LVOT(),
+            "ascAortaDiameter": self.evaluate_Asc_Aorta(),
             "aorticValveAnatomyType": self.evaluate_Valve_anatomy(),
             "calciumScore": self.evaluate_Calcium()
         }
@@ -165,7 +175,7 @@ class ConditionEvaluator:
         return data
         # return pd.DataFrame(data)
 
-# # Example Usage
+# Example Usage
 # input_values = {
 #     "stjDiameter": 24,
 #     "sovHeight": 12.9,
@@ -180,7 +190,8 @@ class ConditionEvaluator:
 #     "calciumScore": 9500,
 #     "icd4mm" : 27,
 #     "icd6mm" : 29.5,
-#     "icd8mm" : 31
+#     "icd8mm" : 31,
+#     "ascAortaDiameter" : 50
 # }
 
 # evaluator = ConditionEvaluator(input_values)
