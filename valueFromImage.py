@@ -4,7 +4,7 @@ import easyocr
 import re
 
 class YellowShadeOCR:
-    def __init__(self, input_image_path='/home/neeraj/phase1/output_image.png', processed_image_path='yellow_shades_image.png'):
+    def __init__(self, input_image_path='output_image.png', processed_image_path='yellow_shades_image.png'):
         """
         Initializes the class and runs the yellow shade detection and OCR automatically.
         :param input_image_path: Path to the input image.
@@ -98,11 +98,11 @@ class YellowShadeOCR:
         self.pick_yellow_shades()
         self.apply_easyocr_extract_numeric()
 
-# Usage Example
-if __name__ == "__main__":
-    input_image_path = "/home/neeraj/phase1/output_image.png"  # Path to your input image
-    processed_image_path = "yellow_shades_image.png"  # Path to save the yellow-shaded image
+# # Usage Example
+# if __name__ == "__main__":
+#     input_image_path = "output_image.png"  # Path to your input image
+#     processed_image_path = "yellow_shades_image.png"  # Path to save the yellow-shaded image
 
-    processor = YellowShadeOCR(input_image_path, processed_image_path)
+#     processor = YellowShadeOCR(input_image_path, processed_image_path)
 
-    # print("OCR Complete. Final Numeric Value:", processor.numeric_value)
+#     # print("OCR Complete. Final Numeric Value:", processor.numeric_value)

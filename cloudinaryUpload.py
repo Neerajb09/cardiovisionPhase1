@@ -2,7 +2,7 @@ import cloudinary
 import cloudinary.uploader
 
 class CloudinaryUploader:
-    def __init__(self, file_path = '/home/neeraj/phase1/output_image.png'):
+    def __init__(self, file_path = 'output_image.png'):
         """
         Initializes the CloudinaryUploader with the necessary credentials and uploads the file.
         :param cloud_name: Cloudinary cloud name.
@@ -33,8 +33,8 @@ class CloudinaryUploader:
             return None
 
 
-if __name__ == "__main__":
-      # Replace with your file path
+# if __name__ == "__main__":
+#       # Replace with your file path
 
-    uploader = CloudinaryUploader()
-    print(f"Uploaded File URL: {uploader.file_url}")
+#     uploader = CloudinaryUploader()
+#     print(f"Uploaded File URL: {uploader.file_url}")
