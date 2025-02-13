@@ -1,4 +1,4 @@
-import fitz  # PyMuPDF
+import pymupdf as fitz  # PyMuPDF
 from pdf2image import convert_from_path
 import re
 import cv2
@@ -96,8 +96,9 @@ class desired_image:
                 print(f"Highlighted PDF saved at: {self.highlighted_pdf_path}")
                 return page_num
 
-        print(f"No matches for regex patterns {self.regex_patterns} found in the PDF.")
+        # print(f"No matches for regex patterns {self.regex_patterns} found in the PDF.")
         return None
+
 
     def detect_highlight_and_crop(self, image_path):
         """
@@ -117,7 +118,7 @@ class desired_image:
         contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
         if not contours:
-            print("No highlighted region found in the image.")
+            # print("No highlighted region found in the image.")
             return None
 
         largest_contour = max(contours, key=cv2.contourArea)
@@ -130,7 +131,7 @@ class desired_image:
         cropped_image = image[crop_y_start:crop_y_end, crop_x_start:crop_x_end]
 
         cv2.imwrite(self.output_image_path, cropped_image)
-        print(f"Cropped image saved at: {self.output_image_path}")
+        # print(f"Cropped image saved at: {self.output_image_path}")
 
         return self.output_image_path
 
@@ -180,6 +181,7 @@ class desired_image:
             image_np = np.array(image)
             text = reader.readtext(image_np, detail=0)
             extracted_text = "".join(text)
+            print(extracted_text)
             # print(f"Extracted text: {extracted_text}")
 
             # Extract Calcium Score from text
@@ -197,6 +199,7 @@ class desired_image:
         """
         Orchestrates the entire process of highlighting, cropping, saving, uploading, and extracting text.
         """
+    
         pdf_path = self.fetch_pdf()
         if not pdf_path:
             print("PDF could not be fetched. Stopping the process.")
@@ -225,7 +228,7 @@ class desired_image:
 
 # # Example Usage
 # if __name__ == "__main__":
-#     pdf_path = '/home/neeraj/reports/3mensio report_32%_MICHAEL ALEXANDER__Dr Jaspal Arneja__Arneja Heart Institute_Nagpur_corelab.pdf'
+#     pdf_path = '/mnt/nvme_disk2/User_data/nb57077k/cardiovision/phase1/Bicuspid.pdf'
 #     regex_patterns = [r'(?i)aortic valve calcification']
 
 #     processor = desired_image(

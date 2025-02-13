@@ -8,6 +8,7 @@ from valueFromImage import YellowShadeOCR
 from cloudinaryUpload import CloudinaryUploader
 from calcificationImage import Calcification_image 
 from fineTuneImage import ImageProcessor
+import logging
 
 
 app = Flask(__name__)
@@ -47,19 +48,19 @@ def extract_pdf():
             ImageProcessor()
             icd_values['icd4mmImg'] = CloudinaryUploader().file_url
             icd_values['icd4mm'] = value.numeric_value
-            # print("ICD@4mm:",value.numeric_value)
+            print("ICD@4mm:",value.numeric_value)
 
             gg = PDFHighlighterAndCropper(pdf_url,  regex_patterns = [r'ICD @6mm', r'Inter commisural distance @6mm', r'ICD @ 6mm'])
             value = YellowShadeOCR()
             ImageProcessor()
-            # print("ICD@6mm:",value.numeric_value)
+            print("ICD@6mm:",value.numeric_value)
             icd_values['icd6mmImg'] = CloudinaryUploader().file_url
             icd_values['icd6mm'] = value.numeric_value
             
             gg = PDFHighlighterAndCropper(pdf_url,  regex_patterns = [r'ICD @8mm', r'Inter commisural distance @8mm',r'ICD @ 8mm'])
             value = YellowShadeOCR()
             ImageProcessor()
-            # print("ICD@8mm:",value.numeric_value)
+            print("ICD@8mm:",value.numeric_value)
             icd_values['icd8mmImg'] = CloudinaryUploader().file_url
             icd_values['icd8mm'] = value.numeric_value
         Calcification_image(pdf_url,regex_patterns=[r'(?i)aortic valve calcification']).cropped_output
@@ -90,7 +91,7 @@ def extract_pdf():
 @app.route('/fetch_report', methods=['POST'])
 def fetch_report():
     data = request.json['report']
-    # print(data)
+    print(data)
     evaluator = ConditionEvaluator(data)
     results_table = evaluator.generate_results_table()
 
@@ -105,4 +106,5 @@ def fetch_report():
 if __name__ == '__main__':
     # Run the Flask app on the desired port
     print(1)
+    logging.basicConfig(level=logging.DEBUG)
     app.run(host='0.0.0.0', port=20201)

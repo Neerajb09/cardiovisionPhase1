@@ -58,7 +58,6 @@ class PDFExtractor:
         """
         Fetch the PDF content from a URL or local file.
         """
-    
         if self.pdf_url:
             response = requests.get(self.pdf_url)
             if response.status_code == 200:
@@ -90,12 +89,11 @@ class PDFExtractor:
         
         processor = desired_image(
             pdf_url=self.pdf_url,
-            pdf_path=self.pdf_path,
             regex_patterns=regex_patterns
         )
-        # print("Cropped Image URL:", processor.cropped_output)
-        # print("Extracted Text:", processor.extracted_text)
-        # print("Calcium Score:", processor.calcium_score)
+        print("Cropped Image URL:", processor.cropped_output)
+        print("Extracted Text:", processor.extracted_text)
+        print("Calcium Score:", processor.calcium_score)
         return processor.calcium_score
 
     
@@ -208,16 +206,16 @@ class PDFExtractor:
         # Save the output PDF with highlights
         doc.save(output_pdf_path)
         doc.close()
-        self.values['url']= self.upload_to_cloudinary(output_pdf_path)
+        # self.values['url']= self.upload_to_cloudinary(output_pdf_path)
 
     def upload_to_cloudinary(self, file_path):
         """
         Upload the file to Cloudinary and return the file URL.
         """
         cloudinary.config(
-            cloud_name=os.getenv('cloud_name'),
-            api_key=os.getenv('api_key'),
-            api_secret=os.getenv('api_secret')
+            cloud_name='ddiv6zknz',
+            api_key='583371225574577',
+            api_secret='noZQfCIf3fvBaV-fEAa0PSqolt4'
         )
         try:
             response = cloudinary.uploader.upload(file_path, resource_type='raw',format = 'N/A')
@@ -230,7 +228,7 @@ class PDFExtractor:
         pdf_content = self.fetch_pdf_content()
         page_text = self.extract_text(pdf_content)
         self.extract_values(page_text)
-        self.highlight_values_in_pdf(output_pdf_path=output_pdf_path )
+        self.highlight_values_in_pdf(output_pdf_path)
         self.values["url"] = self.upload_to_cloudinary(output_pdf_path)
         return self.values
     
@@ -276,14 +274,14 @@ class PDFExtractor:
 
 
 # pdf_url = "https://res.cloudinary.com/dkaa6ubzd/raw/upload/v1737449491/yabnbdw5cux5brkjd6zw"
-# # pdf_path = "/mnt/nvme_disk2/User_data/nb57077k/Bicuspid.pdf"
+# # pdf_path = "/home/neeraj/Bicuspid.pdf"
 # start_time = time.time()
 # # report_extractor = PDFExtractor(pdf_path=pdf_path)
 # report_extractor = PDFExtractor(pdf_url=pdf_url)
 # # report_extractor.extract_text_from_pdf()
 # extracted_values = report_extractor.run_extraction()
-# # output_pdf_path = "output_highlighted_t.pdf"
-# # report_extractor.highlight_values_in_pdf()
+# output_pdf_path = "output_highlighted_t.pdf"
+# report_extractor.highlight_values_in_pdf(output_pdf_path)
 
 # for key, value in extracted_values.items():
 #    print(f"{key}: {value} mm" if "Diameter" in key or "Height" in key else f"{key}: {value}")
